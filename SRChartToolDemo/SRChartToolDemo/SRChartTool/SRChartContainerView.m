@@ -25,6 +25,7 @@
         [self setBackgroundColor:[UIColor clearColor]];
         _scrollView=[[UIScrollView alloc] init];
         [self addSubview:_scrollView];
+        [_scrollView setShowsHorizontalScrollIndicator:NO];
         [_scrollView setContentInset:UIEdgeInsetsMake(0, 50, 0, 50)];
         [_scrollView.layer setMasksToBounds:NO];
         
@@ -43,7 +44,7 @@
 -(void)pinchRecognizer:(UIPinchGestureRecognizer*)pinchRecognizer{
     self.displayLink.paused=YES;
     if( pinchRecognizer.numberOfTouches == 2 ) {
-        self.chartView.showValueView.hidden=YES;
+        [self.chartView hideInfo];
         //2.获取捏合中心点 -> 捏合中心点距离scrollviewcontent左侧的距离
         CGPoint p1 = [pinchRecognizer locationOfTouch:0 inView:_scrollView];
         CGPoint p2 = [pinchRecognizer locationOfTouch:1 inView:_scrollView];
@@ -77,7 +78,7 @@
     for (int i=0; i<self.seperateLineCount; i++) {
         NSString *yTitle=[NSString stringWithFormat:@"%.2f",i*value];
         UIFont *yTitleFont=[UIFont systemFontOfSize:11];
-        CGSize titleSize=[SRChartDefaultView sizeWithString:yTitle maxSize:CGSizeMake(MAXFLOAT, MAXFLOAT) font:yTitleFont];
+        CGSize titleSize = [yTitle sizeWithMaxSize:CGSizeMake(MAXFLOAT, MAXFLOAT) font:yTitleFont];
         CGFloat x=titleSize.width+5;
         CGFloat y=CGRectGetMaxY(self.chartView.frame)-i*seperateH-20;
         CGFloat w=self.frame.size.width-x;
@@ -99,6 +100,7 @@
 
 -(void)setChartView:(SRChartDefaultView *)chartView{
     if (_chartView) {
+        chartView.lineColors = _chartView.lineColors;
         [_chartView removeFromSuperview];
     }
     _chartView=chartView;
@@ -117,6 +119,7 @@
 }
 
 -(void)showChartWithAnimated:(BOOL)animated{
+    [self.chartView hideInfo];
     [self setNeedsDisplay];
     if (animated) {
         [_scrollView setContentOffset:CGPointMake(0, 0)];
@@ -127,34 +130,60 @@
         [CATransaction begin];
         [CATransaction setDisableActions:YES];
         CGFloat scale=self.chartView.frame.size.height/self.yMaxValue;
-        UIBezierPath *path=[UIBezierPath bezierPath];
-        CGPoint prePoint=CGPointMake(0, 20);
-        [path moveToPoint:prePoint];
-        for (int i=0; i<self.yValueArr.count; i++) {
-            CGFloat x,y=0;
-            x=(i+1)*self.chartView.gap;
-            
-            //根据图层高度和y轴最大值的比例求出当前遍历点的实际y值
-            CGFloat yValue=[self.yValueArr[i] floatValue];
-            y=yValue*scale;
-            //绘制点路径
-            CGPoint nextPoint=CGPointMake(x, y);
-            
-            [self.chartView drawWithPath:path index:i prePoint:prePoint nextPoint:nextPoint currentPercent:1 springPercent:0];
-            prePoint=nextPoint;
-            
+        NSMutableArray *pathList = [NSMutableArray array];
+        CGFloat chartViewWidth = 0;
+        for (NSArray *yValueArr in self.yValueArrList) {
+            UIBezierPath *path=[UIBezierPath bezierPath];
+            CGPoint prePoint=CGPointMake(0, 20);
+            [path moveToPoint:prePoint];
+            for (int i=0; i< yValueArr.count; i++) {
+                CGFloat x,y=0;
+                x=(i+1)*self.chartView.gap;
+                
+                //根据图层高度和y轴最大值的比例求出当前遍历点的实际y值
+                CGFloat yValue=[yValueArr[i] floatValue];
+                y=yValue*scale;
+                //绘制点路径
+                CGPoint nextPoint=CGPointMake(x, y);
+                
+                [self.chartView drawWithPath:path index:i prePoint:prePoint nextPoint:nextPoint currentPercent:1 springPercent:0];
+                prePoint=nextPoint;
+            }
+            if ([self.chartView isClosePath]) {
+                [path addLineToPoint:CGPointMake(prePoint.x, 20)];
+                [path closePath];
+            }
+            [pathList addObject:path];
+            chartViewWidth = fmaxf(chartViewWidth, prePoint.x);
         }
-        if ([self.chartView isClosePath]) {
-            [path addLineToPoint:CGPointMake(prePoint.x, 20)];
-            [path closePath];
-        }
-        [self.chartView showWithPath:path];
+        [self.chartView showWithPathList:pathList];
+//        UIBezierPath *path=[UIBezierPath bezierPath];
+//        CGPoint prePoint=CGPointMake(0, 20);
+//        [path moveToPoint:prePoint];
+//        for (int i=0; i<self.yValueArr.count; i++) {
+//            CGFloat x,y=0;
+//            x=(i+1)*self.chartView.gap;
+//
+//            //根据图层高度和y轴最大值的比例求出当前遍历点的实际y值
+//            CGFloat yValue=[self.yValueArr[i] floatValue];
+//            y=yValue*scale;
+//            //绘制点路径
+//            CGPoint nextPoint=CGPointMake(x, y);
+//
+//            [self.chartView drawWithPath:path index:i prePoint:prePoint nextPoint:nextPoint currentPercent:1 springPercent:0];
+//            prePoint=nextPoint;
+//
+//        }
+//        if ([self.chartView isClosePath]) {
+//            [path addLineToPoint:CGPointMake(prePoint.x, 20)];
+//            [path closePath];
+//        }
+//        [self.chartView showWithPath:path];
         [CATransaction commit];
-        self.chartView.frame=CGRectMake(0, self.chartView.frame.origin.y, prePoint.x, self.chartView.frame.size.height);
+        self.chartView.frame=CGRectMake(0, self.chartView.frame.origin.y, chartViewWidth, self.chartView.frame.size.height);
         [_scrollView setContentSize:CGSizeMake(CGRectGetMaxX(self.chartView.frame), _scrollView.frame.size.height)];
     }
     [self.chartView drawXTitleWithXTitleArr:self.xValueArr];
-    self.chartView.fillColor=[UIColor colorWithRed:1 green:1 blue:1 alpha:0.3];
 }
 
 -(void)showChartWithStiffness:(CGFloat)_stiffness{
@@ -162,73 +191,90 @@
     [self showChartWithAnimated:YES];
 }
 
--(void)doAnimation{
-    
+- (void)showChartWithXValueArr:(NSArray *)xValueArr yValueArrList:(NSArray<NSArray *> *)yValueArrList {
+    stiffness = 0.8;
+    self.xValueArr = xValueArr;
+    self.yValueArrList = yValueArrList;
+    [self showChartWithAnimated:YES];
+}
+
+- (void)showChartWithXValueArr:(NSArray *)xValueArr yValueArrList:(NSArray<NSArray *> *)yValueArrList lineColors:(NSArray<UIColor *> *)lineColors {
+    self.chartView.lineColors = lineColors;
+    [self showChartWithXValueArr:xValueArr yValueArrList:yValueArrList];
+}
+
+- (void)doAnimation {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     NSTimeInterval usedTime=self.displayLink.timestamp-animationStartTime;
-    UIBezierPath *path=[UIBezierPath bezierPath];
-    CGPoint prePoint=CGPointMake(0, 20);
-    [path moveToPoint:prePoint];
     /*
      因为chartLayer绘图方法内部用了关闭隐式动画的方法，频繁提交动画事务导致CPU占用率太高，
      所以这里用一个判断是否应该让动画结束的标志，当判断动画执行的位置已经超出屏幕边界时，将
      该值设置为YES表示停止逐帧绘图，以优化性能。
      */
+    NSMutableArray *pathList = [NSMutableArray array];
     BOOL complete=NO;
     CGFloat scale=self.chartView.frame.size.height/self.yMaxValue;
     NSTimeInterval springTime=2;//弹性效果持续时间
-    for (int i=0; i<self.yValueArr.count; i++) {
-        CGFloat x,y=0;
-        x=(1+i)*self.gap;
-        
-        //根据图层高度和y轴最大值的比例求出当前遍历点的实际y值
-        CGFloat yValue=[self.yValueArr[i] floatValue];
-        y=yValue*scale;
-        //绘制点路径
-        CGPoint nextPoint=CGPointMake(x, y);
-        NSTimeInterval currentUsedTime= fmax(0, usedTime-i*self.animationIntervalDuration);
-        CGFloat currentPercent=fminf(1, currentUsedTime/self.unitAnimationDuration);
-        
-        BOOL isOut=i*self.gap>(_scrollView.contentOffset.x+_scrollView.frame.size.width);//判断当前绘制的点是否已经超出屏幕范围
-        
-        CGFloat springPercent=0;
-        if (stiffness>0) {
-            CGFloat springX=fmaxf(0,fminf(1,currentUsedTime/(self.unitAnimationDuration+springTime)));
-            springPercent=[self getSpringInterpolation: springX stiffness:stiffness];
+    CGFloat chartViewWidth = 0;
+    for (NSArray *yValueArr in self.yValueArrList) {
+        UIBezierPath *path=[UIBezierPath bezierPath];
+        CGPoint prePoint=CGPointMake(0, 20);
+        [path moveToPoint:prePoint];
+        for (int i=0; i<yValueArr.count; i++) {
+            CGFloat x,y=0;
+            x=(1+i)*self.gap;
+            
+            //根据图层高度和y轴最大值的比例求出当前遍历点的实际y值
+            CGFloat yValue=[yValueArr[i] floatValue];
+            y=yValue*scale;
+            //绘制点路径
+            CGPoint nextPoint=CGPointMake(x, y);
+            NSTimeInterval currentUsedTime= fmax(0, usedTime-i*self.animationIntervalDuration);
+            CGFloat currentPercent=fminf(1, currentUsedTime/self.unitAnimationDuration);
+            
+            BOOL isOut=i*self.gap>(_scrollView.contentOffset.x+_scrollView.frame.size.width);//判断当前绘制的点是否已经超出屏幕范围
+            
+            CGFloat springPercent=0;
+            if (stiffness>0) {
+                CGFloat springX=fmaxf(0,fminf(1,currentUsedTime/(self.unitAnimationDuration+springTime)));
+                springPercent=[self getSpringInterpolation: springX stiffness:stiffness];
+            }
+            BOOL currentAnimationComplete=currentUsedTime>=self.unitAnimationDuration+springTime;//判断当前点的动画是否执行完成
+            
+            /*
+             当最后一个点的动画执行完毕或者
+             当同时满足当前绘制点超出屏幕，当前绘制点的弹性动画已经执行完毕时，
+             则视为应该停止逐帧绘图，让complete为YES，并暂停displayLink
+             */
+            if ((isOut&&currentAnimationComplete)||(i==yValueArr.count-1&&currentAnimationComplete)) {
+                complete=YES;
+                stiffness=0;
+                _displayLink.paused=YES;
+            }
+            
+            /*
+             当complete为YES时，将点的绘制百分比设为1和弹性因素设为0.
+             表示让之后的所有点直接绘制到最终位置
+             */
+            if (complete) {//
+                currentPercent=1;
+                springPercent=0;
+            }
+            
+            prePoint=[self.chartView drawWithPath:path index:i prePoint:prePoint nextPoint:nextPoint currentPercent:currentPercent springPercent:springPercent];
+            
         }
-        BOOL currentAnimationComplete=currentUsedTime>=self.unitAnimationDuration+springTime;//判断当前点的动画是否执行完成
-        
-        /*
-         当最后一个点的动画执行完毕或者
-         当同时满足当前绘制点超出屏幕，当前绘制点的弹性动画已经执行完毕时，
-         则视为应该停止逐帧绘图，让complete为YES，并暂停displayLink
-         */
-        if ((isOut&&currentAnimationComplete)||(i==self.yValueArr.count-1&&currentAnimationComplete)) {
-            complete=YES;
-            stiffness=0;
-            _displayLink.paused=YES;
+        if ([self.chartView isClosePath]) {
+            [path addLineToPoint:CGPointMake(prePoint.x, 20)];
+            [path closePath];
         }
-        
-        /*
-         当complete为YES时，将点的绘制百分比设为1和弹性因素设为0.
-         表示让之后的所有点直接绘制到最终位置
-         */
-        if (complete) {//
-            currentPercent=1;
-            springPercent=0;
-        }
-        
-        prePoint=[self.chartView drawWithPath:path index:i prePoint:prePoint nextPoint:nextPoint currentPercent:currentPercent springPercent:springPercent];
-        
+        [pathList addObject:path];
+        chartViewWidth = fmaxf(chartViewWidth, prePoint.x);
     }
-    if ([self.chartView isClosePath]) {
-        [path addLineToPoint:CGPointMake(prePoint.x, 20)];
-        [path closePath];
-    }
-    self.chartView.frame=CGRectMake(0, self.chartView.frame.origin.y, prePoint.x, self.chartView.frame.size.height);
+    [self.chartView showWithPathList:pathList];
+    self.chartView.frame=CGRectMake(0, self.chartView.frame.origin.y, chartViewWidth, self.chartView.frame.size.height);
     [_scrollView setContentSize:CGSizeMake(CGRectGetMaxX(self.chartView.frame), _scrollView.frame.size.height)];
-    [self.chartView showWithPath:path];
     [CATransaction commit];
 }
 
@@ -239,13 +285,6 @@
     return _xValueArr;
 }
 
--(NSArray *)yValueArr{
-    if (!_yValueArr) {
-        _yValueArr=[NSArray array];
-    }
-    return _yValueArr;
-}
-
 -(CGFloat)yMaxValue{
     //    if (_yValueArr.count<1) {
     //        _yMaxValue=1;//保证y轴最大值有值，因为该值在计算中会用作分母，以免造成0作为除数
@@ -254,8 +293,11 @@
     //    if (_yMaxValue==0||_yMaxValue<yMaxValueInArr) {//y轴显示的最大值不能小于数组中实际的最大值
     //        _yMaxValue=yMaxValueInArr;
     //    }
-    
-    return [[self.yValueArr valueForKeyPath:@"@max.floatValue"] floatValue]*2;
+    CGFloat maxValue = 0;
+    for (NSArray *yValueArr in self.yValueArrList) {
+        maxValue = fmaxf(maxValue, [[yValueArr valueForKeyPath:@"@max.floatValue"] floatValue]*2);
+    }
+    return maxValue;
 }
 
 -(CGFloat)gap{
@@ -288,14 +330,14 @@
 
 -(NSTimeInterval)unitAnimationDuration{
     if (_unitAnimationDuration==0) {
-        _unitAnimationDuration=0.5;
+        _unitAnimationDuration=0.1;
     }
     return _unitAnimationDuration;
 }
 
 -(NSTimeInterval)animationIntervalDuration{
     if (_animationIntervalDuration==0) {
-        _animationIntervalDuration=0.1;
+        _animationIntervalDuration=0.05;
     }
     return _animationIntervalDuration;
 }
@@ -311,18 +353,31 @@
 }
 
 #pragma mark-SRChartDefaultViewDelegate
--(NSString *)valueForIndex:(int)index{
-    if (index>=0&&index<self.yValueArr.count) {
-        return [self.yValueArr[index] stringValue];
+- (NSArray<NSString *> *)valueForIndex:(int)index {
+    NSMutableArray *valueStrList = [NSMutableArray array];
+    for (NSArray *yValueArr in self.yValueArrList) {
+        NSString *valueStr = [yValueArr[index] stringValue];
+        [valueStrList addObject:valueStr];
     }
-    return @"error";
+    return valueStrList;
+}
+
+- (NSString *)xValueStrForIndex:(int)index {
+    if (index >= 0 && index < self.xValueArr.count) {
+        return [self.xValueArr objectAtIndex:index];
+    }
+    return @"-";
 }
 
 -(CGFloat)yForIndex:(int)index{
-    if (index>=0&&index<self.yValueArr.count) {
+    if (index>=0&&index<[self.yValueArrList firstObject].count) {
         CGFloat scale=self.chartView.frame.size.height/self.yMaxValue;
-        CGFloat yValue=[self.yValueArr[index] floatValue];
-        CGFloat y=yValue*scale;
+        CGFloat maxYValue = 0;
+        for (NSArray *yValueArr in self.yValueArrList) {
+            CGFloat yValue=[yValueArr[index] floatValue];
+            maxYValue = fmaxf(yValue, maxYValue);
+        }
+        CGFloat y=maxYValue*scale;
         return self.chartView.frame.size.height-y;
     }
     return 0;

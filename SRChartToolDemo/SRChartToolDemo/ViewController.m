@@ -7,10 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "SRChartView.h"
 #import "SRChartDefaultView.h"
 #import "SRChartContainerView.h"
 #import "SRChartBarView.h"
+#import "SRChartLineView.h"
 @interface ViewController ()
 
 @end
@@ -34,22 +34,24 @@
 - (IBAction)generate:(UIButton *)sender {
     
     NSMutableArray *xValueArr=[NSMutableArray array];
-    NSMutableArray *yValueArr=[NSMutableArray array];
     
     for(int i=1;i<100;i++){
-        [xValueArr addObject:[NSString stringWithFormat:@"%d",i]];
-        [yValueArr addObject:[NSNumber numberWithInt:arc4random()%100]];
+        [xValueArr addObject:[NSString stringWithFormat:@"%d月%d日",i,i]];
     }
-    
-    containerView.xValueArr=xValueArr;
-    containerView.yValueArr=yValueArr;
-    [containerView showChartWithStiffness:0.4];
+    NSMutableArray *yValueArr1 = [NSMutableArray array];
+    NSMutableArray *yValueArr2 = [NSMutableArray array];
+    for (int i = 1; i < 100 ; i ++) {
+        [yValueArr1 addObject:[NSNumber numberWithInt:arc4random()%100]];
+        [yValueArr2 addObject:[NSNumber numberWithInt:arc4random()%100]];
+    }
+    containerView.chartView.fillColor = [UIColor clearColor];
+    [containerView showChartWithXValueArr:xValueArr yValueArrList:@[yValueArr1,yValueArr2] lineColors:@[[UIColor colorWithRed:24/255.0 green:144/255 blue:255/255 alpha:1],[UIColor colorWithRed:47/255.0 green:194/255.0 blue:91/255.0 alpha:1]]];
 }
     
 - (IBAction)typeChange:(UISegmentedControl *)sender {
     switch ([sender selectedSegmentIndex]) {
         case 0:
-        containerView.chartView=[[SRChartDefaultView alloc] init];
+        containerView.chartView=[[SRChartLineView alloc] init];
         break;
         case 1:
         containerView.chartView=[[SRChartCurveView alloc] init];

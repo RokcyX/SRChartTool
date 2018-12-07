@@ -13,9 +13,15 @@
 
 @property(nonatomic,strong)SRChartDefaultView *chartView;
 
+/**
+ 横坐标集合
+ */
 @property(nonatomic,strong)NSArray *xValueArr;
 
-@property(nonatomic,strong)NSArray *yValueArr;
+/**
+ 需要显示的数据集合
+ */
+@property (nonatomic,strong) NSArray<NSArray *> *yValueArrList;
 
 /**
  纵坐标最大值
@@ -65,5 +71,9 @@
  @param stiffness 刚度系数，此值越大，弹性越小
  */
 -(void)showChartWithStiffness:(CGFloat)stiffness;
+
+- (void)showChartWithXValueArr:(NSArray *)xValueArr yValueArrList:(NSArray<NSArray *> *)yValueArrList;
+
+- (void)showChartWithXValueArr:(NSArray *)xValueArr yValueArrList:(NSArray<NSArray *> *)yValueArrList lineColors:(nonnull NSArray<UIColor *> *)lineColors;
 
 @end

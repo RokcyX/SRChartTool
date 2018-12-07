@@ -12,12 +12,41 @@
 
 @property(nonatomic,strong)NSMutableArray *pointLayers;
 
+@property (nonatomic,strong) CAShapeLayer *pointContainerLayer;
+
+@property (nonatomic,strong) UIBezierPath *pointPath;
+
+@property (nonatomic,assign) NSInteger pointCount;
+
 @end
 
 @implementation SRChartCurveView
 
 -(BOOL)isClosePath{
     return YES;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        self.pointContainerLayer = [CAShapeLayer layer];
+        [self.layer addSublayer:self.pointContainerLayer];
+        self.pointContainerLayer.transform=CATransform3DMakeRotation(M_PI, 1, 0, 0);
+        self.pointContainerLayer.fillColor = self.pointColor.CGColor;
+        self.pointPath = [UIBezierPath bezierPath];
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.pointContainerLayer.frame = [[self.chartLayerList firstObject] frame];
+   
+}
+
+- (void)showWithPathList:(NSArray<UIBezierPath *> *)pathList {
+    [super showWithPathList:pathList];
+    self.pointContainerLayer.path = self.pointPath.CGPath;
+    self.pointPath = [UIBezierPath bezierPath];
 }
 
 -(CGPoint)drawWithPath:(UIBezierPath *)path index:(int)index prePoint:(CGPoint)prePoint nextPoint:(CGPoint)nextPoint currentPercent:(CGFloat)currentPercent springPercent:(CGFloat)springPercent{
@@ -32,16 +61,8 @@
     CGPoint cp1=CGPointMake(controlPointX, prePoint.y);
     CGPoint cp2=CGPointMake(controlPointX, nextPoint.y);
     [path addCurveToPoint:nextPoint controlPoint1:cp1 controlPoint2:cp2];
-    
-    CALayer *pointLayer;
-    if (self.pointLayers.count<=index) {
-        pointLayer=[self createPointLayer];
-        [self.chartLayer addSublayer:pointLayer];
-        [self.pointLayers addObject:pointLayer];
-    }
-    pointLayer=[self.pointLayers objectAtIndex:index];
-
-    pointLayer.position=nextPoint;
+    [self.pointPath moveToPoint: nextPoint];
+    [self.pointPath addArcWithCenter:nextPoint radius:self.pointRadius startAngle:0 endAngle:2 * M_PI clockwise:YES];
     return nextPoint;
 }
 

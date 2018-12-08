@@ -100,14 +100,14 @@
 
 -(UIColor *)pointColor{
     if (!_pointColor) {
-        _pointColor=[UIColor whiteColor];
+        _pointColor=[UIColor blackColor];
     }
     return _pointColor;
 }
 
 -(UIColor *)xTitleColor{
     if (!_xTitleColor) {
-        _xTitleColor=[UIColor whiteColor];
+        _xTitleColor=[UIColor blackColor];
     }
     return _xTitleColor;
 }
@@ -178,6 +178,8 @@
 -(void)didClickWithPoint:(CGPoint)point title:(NSString *)title valueStrList:(NSArray<NSString *> *)valueStrList{
     self.dataFloatView.hidden = NO;
     self.indicatorLine.hidden = NO;
+    [self bringSubviewToFront:self.dataFloatView];
+    [self bringSubviewToFront:self.indicatorLine];
     [self.dataFloatView showWithTitle:title infoStrList:valueStrList pointColorList:self.lineColors];
     CGPoint position=CGPointMake(point.x+5, point.y);
     self.dataFloatView.frame = CGRectMake(position.x, position.y - self.dataFloatView.frame.size.height, self.dataFloatView.frame.size.width, self.dataFloatView.frame.size.height);

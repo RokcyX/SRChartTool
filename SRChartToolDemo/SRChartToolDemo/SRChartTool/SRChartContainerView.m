@@ -7,6 +7,8 @@
 //
 
 #import "SRChartContainerView.h"
+#import "NSNumber+SRChartTool.h"
+
 @interface SRChartContainerView()<SRChartDefaultViewDelegate>
 
 @property(nonatomic,strong)CADisplayLink *displayLink;
@@ -27,11 +29,10 @@
         [self addSubview:_scrollView];
         [_scrollView setShowsHorizontalScrollIndicator:NO];
         [_scrollView setContentInset:UIEdgeInsetsMake(0, 50, 0, 50)];
-        [_scrollView.layer setMasksToBounds:NO];
+        [_scrollView.layer setMasksToBounds:YES];
         
         UIPinchGestureRecognizer *pinchRecognizer=[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchRecognizer:)];
         [self addGestureRecognizer:pinchRecognizer];
-        
     }
     return self;
 }
@@ -72,28 +73,28 @@
 -(void)drawRect:(CGRect)rect{
     [super drawRect:rect];
     CGContextRef ctx=UIGraphicsGetCurrentContext();
+    CGFloat yTitleMaxWidth = 40;//y轴数值最大宽度
     CGFloat value=self.yMaxValue/self.seperateLineCount;
     CGFloat h=self.chartView.frame.size.height-20;
     CGFloat seperateH=h/self.seperateLineCount;
     for (int i=0; i<self.seperateLineCount; i++) {
-        NSString *yTitle=[NSString stringWithFormat:@"%.2f",i*value];
+        NSString *yTitle=[@(i * value) getStringBySeparatorWithQuantities:2];
         UIFont *yTitleFont=[UIFont systemFontOfSize:11];
-        CGSize titleSize = [yTitle sizeWithMaxSize:CGSizeMake(MAXFLOAT, MAXFLOAT) font:yTitleFont];
-        CGFloat x=titleSize.width+5;
+        CGSize titleSize = [yTitle sizeWithMaxSize:CGSizeMake(yTitleMaxWidth, MAXFLOAT) font:yTitleFont];
+        CGFloat x=yTitleMaxWidth+5;
         CGFloat y=CGRectGetMaxY(self.chartView.frame)-i*seperateH-20;
-        CGFloat w=self.frame.size.width-x;
         
-        [yTitle drawInRect:CGRectMake(0, y-0.5*titleSize.height, titleSize.width, titleSize.height) withAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:yTitleFont}];
+        [yTitle drawInRect:CGRectMake(yTitleMaxWidth - titleSize.width, y-0.5*titleSize.height, titleSize.width, titleSize.height) withAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:yTitleFont}];
         CGContextMoveToPoint(ctx, x, y);
-        CGContextAddLineToPoint(ctx, w, y);
+        CGContextAddLineToPoint(ctx, rect.size.width, y);
     }
-    [[UIColor colorWithRed:1 green:1 blue:1 alpha:0.3] setStroke];
+    [[UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1] setStroke];
     CGContextStrokePath(ctx);
 }
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-    _scrollView.frame=CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _scrollView.frame=CGRectMake(40, 0, self.frame.size.width - 40, self.frame.size.height);
     _chartView.frame=_scrollView.bounds;
     [_scrollView setContentSize:CGSizeMake(CGRectGetMaxX(self.chartView.frame), _scrollView.frame.size.height)];
 }
@@ -157,28 +158,6 @@
             chartViewWidth = fmaxf(chartViewWidth, prePoint.x);
         }
         [self.chartView showWithPathList:pathList];
-//        UIBezierPath *path=[UIBezierPath bezierPath];
-//        CGPoint prePoint=CGPointMake(0, 20);
-//        [path moveToPoint:prePoint];
-//        for (int i=0; i<self.yValueArr.count; i++) {
-//            CGFloat x,y=0;
-//            x=(i+1)*self.chartView.gap;
-//
-//            //根据图层高度和y轴最大值的比例求出当前遍历点的实际y值
-//            CGFloat yValue=[self.yValueArr[i] floatValue];
-//            y=yValue*scale;
-//            //绘制点路径
-//            CGPoint nextPoint=CGPointMake(x, y);
-//
-//            [self.chartView drawWithPath:path index:i prePoint:prePoint nextPoint:nextPoint currentPercent:1 springPercent:0];
-//            prePoint=nextPoint;
-//
-//        }
-//        if ([self.chartView isClosePath]) {
-//            [path addLineToPoint:CGPointMake(prePoint.x, 20)];
-//            [path closePath];
-//        }
-//        [self.chartView showWithPath:path];
         [CATransaction commit];
         self.chartView.frame=CGRectMake(0, self.chartView.frame.origin.y, chartViewWidth, self.chartView.frame.size.height);
         [_scrollView setContentSize:CGSizeMake(CGRectGetMaxX(self.chartView.frame), _scrollView.frame.size.height)];
@@ -286,13 +265,6 @@
 }
 
 -(CGFloat)yMaxValue{
-    //    if (_yValueArr.count<1) {
-    //        _yMaxValue=1;//保证y轴最大值有值，因为该值在计算中会用作分母，以免造成0作为除数
-    //    }
-    //    CGFloat yMaxValueInArr=[[self.yValueArr valueForKeyPath:@"@max.floatValue"] floatValue]*2;
-    //    if (_yMaxValue==0||_yMaxValue<yMaxValueInArr) {//y轴显示的最大值不能小于数组中实际的最大值
-    //        _yMaxValue=yMaxValueInArr;
-    //    }
     CGFloat maxValue = 0;
     for (NSArray *yValueArr in self.yValueArrList) {
         maxValue = fmaxf(maxValue, [[yValueArr valueForKeyPath:@"@max.floatValue"] floatValue]*2);

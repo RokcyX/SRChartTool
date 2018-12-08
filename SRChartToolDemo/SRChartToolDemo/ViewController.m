@@ -22,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor grayColor]];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     containerView=[[SRChartContainerView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
     [self.view addSubview:containerView];
@@ -45,7 +45,7 @@
         [yValueArr2 addObject:[NSNumber numberWithInt:arc4random()%100]];
     }
     containerView.chartView.fillColor = [UIColor clearColor];
-    [containerView showChartWithXValueArr:xValueArr yValueArrList:@[yValueArr1,yValueArr2] lineColors:@[[UIColor colorWithRed:24/255.0 green:144/255 blue:255/255 alpha:1],[UIColor colorWithRed:47/255.0 green:194/255.0 blue:91/255.0 alpha:1]]];
+    [containerView showChartWithXValueArr:xValueArr yValueArrList:@[yValueArr1,yValueArr2] lineColors:@[[UIColor colorWithRed:24/255.0 green:144/255.0 blue:255/255 alpha:1],[UIColor colorWithRed:47/255.0 green:194/255.0 blue:91/255.0 alpha:1]]];
 }
     
 - (IBAction)typeChange:(UISegmentedControl *)sender {

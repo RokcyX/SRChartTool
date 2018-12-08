@@ -65,7 +65,7 @@
 
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
-    UIColor *bgColor = [UIColor colorWithRed:51/255.0 green:51/2550 blue:51/255.0 alpha:0.9];
+    UIColor *bgColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:0.9];
     CGFloat cornerRadius = 5;
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     //从左边三角形顶点开始

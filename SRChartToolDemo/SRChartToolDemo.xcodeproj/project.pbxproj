@@ -7,32 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		823CFB3521BA61E500EB32AA /* SRChartLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 823CFB3421BA61E500EB32AA /* SRChartLineView.m */; };
-		823CFB3821BA6F2200EB32AA /* SRChartDataFloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 823CFB3721BA6F2200EB32AA /* SRChartDataFloatView.m */; };
-		823CFB3B21BA738900EB32AA /* NSString+SRChartTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 823CFB3A21BA738900EB32AA /* NSString+SRChartTool.m */; };
-		824DEDCB21BB5DAA0090A28F /* NSNumber+SRChartTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 824DEDCA21BB5DAA0090A28F /* NSNumber+SRChartTool.m */; };
 		829031C81FF3952000A75327 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 829031C71FF3952000A75327 /* AppDelegate.m */; };
 		829031CB1FF3952000A75327 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 829031CA1FF3952000A75327 /* ViewController.m */; };
 		829031CE1FF3952000A75327 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 829031CC1FF3952000A75327 /* Main.storyboard */; };
 		829031D01FF3952000A75327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 829031CF1FF3952000A75327 /* Assets.xcassets */; };
 		829031D31FF3952000A75327 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 829031D11FF3952000A75327 /* LaunchScreen.storyboard */; };
 		829031D61FF3952000A75327 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 829031D51FF3952000A75327 /* main.m */; };
-		829727E51FF631B00011F119 /* SRChartDefaultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 829727E41FF631B00011F119 /* SRChartDefaultView.m */; };
-		82A8720F2003142D00F4DD8E /* SRChartBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A8720E2003142D00F4DD8E /* SRChartBarView.m */; };
-		82E186111FFB51CE0035CA5A /* SRChartContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E186101FFB51CE0035CA5A /* SRChartContainerView.m */; };
-		82E186141FFB804D0035CA5A /* SRChartCurveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E186131FFB804D0035CA5A /* SRChartCurveView.m */; };
+		82F2F42D21BE109A008BA29B /* SRChartContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2F41D21BE109A008BA29B /* SRChartContainerView.m */; };
+		82F2F42E21BE109A008BA29B /* NSString+SRChartTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2F41E21BE109A008BA29B /* NSString+SRChartTool.m */; };
+		82F2F42F21BE109A008BA29B /* NSNumber+SRChartTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2F42421BE109A008BA29B /* NSNumber+SRChartTool.m */; };
+		82F2F43021BE109A008BA29B /* SRChartDefaultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2F42521BE109A008BA29B /* SRChartDefaultView.m */; };
+		82F2F43121BE109A008BA29B /* SRChartBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2F42821BE109A008BA29B /* SRChartBarView.m */; };
+		82F2F43221BE109A008BA29B /* SRChartDataFloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2F42921BE109A008BA29B /* SRChartDataFloatView.m */; };
+		82F2F43321BE109A008BA29B /* SRChartLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2F42A21BE109A008BA29B /* SRChartLineView.m */; };
+		82F2F43421BE109A008BA29B /* SRChartCurveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2F42B21BE109A008BA29B /* SRChartCurveView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		823CFB3321BA61E400EB32AA /* SRChartLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRChartLineView.h; sourceTree = "<group>"; };
-		823CFB3421BA61E500EB32AA /* SRChartLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRChartLineView.m; sourceTree = "<group>"; };
-		823CFB3621BA6F2200EB32AA /* SRChartDataFloatView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRChartDataFloatView.h; sourceTree = "<group>"; };
-		823CFB3721BA6F2200EB32AA /* SRChartDataFloatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRChartDataFloatView.m; sourceTree = "<group>"; };
-		823CFB3921BA738900EB32AA /* NSString+SRChartTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+SRChartTool.h"; sourceTree = "<group>"; };
-		823CFB3A21BA738900EB32AA /* NSString+SRChartTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+SRChartTool.m"; sourceTree = "<group>"; };
-		824DEDC921BB5DAA0090A28F /* NSNumber+SRChartTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSNumber+SRChartTool.h"; sourceTree = "<group>"; };
-		824DEDCA21BB5DAA0090A28F /* NSNumber+SRChartTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+SRChartTool.m"; sourceTree = "<group>"; };
-		828E91A91FFDFCD1005A9F32 /* SRChartDefaultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRChartDefaultView.h; sourceTree = "<group>"; };
 		829031C31FF3952000A75327 /* SRChartToolDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SRChartToolDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		829031C61FF3952000A75327 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		829031C71FF3952000A75327 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -43,13 +34,22 @@
 		829031D21FF3952000A75327 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		829031D41FF3952000A75327 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		829031D51FF3952000A75327 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		829727E41FF631B00011F119 /* SRChartDefaultView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRChartDefaultView.m; sourceTree = "<group>"; };
-		82A8720D2003142D00F4DD8E /* SRChartBarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRChartBarView.h; sourceTree = "<group>"; };
-		82A8720E2003142D00F4DD8E /* SRChartBarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRChartBarView.m; sourceTree = "<group>"; };
-		82E1860F1FFB51CE0035CA5A /* SRChartContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRChartContainerView.h; sourceTree = "<group>"; };
-		82E186101FFB51CE0035CA5A /* SRChartContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRChartContainerView.m; sourceTree = "<group>"; };
-		82E186121FFB804D0035CA5A /* SRChartCurveView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRChartCurveView.h; sourceTree = "<group>"; };
-		82E186131FFB804D0035CA5A /* SRChartCurveView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRChartCurveView.m; sourceTree = "<group>"; };
+		82F2F41D21BE109A008BA29B /* SRChartContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRChartContainerView.m; sourceTree = "<group>"; };
+		82F2F41E21BE109A008BA29B /* NSString+SRChartTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SRChartTool.m"; sourceTree = "<group>"; };
+		82F2F41F21BE109A008BA29B /* SRChartDefaultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRChartDefaultView.h; sourceTree = "<group>"; };
+		82F2F42021BE109A008BA29B /* SRChartLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRChartLineView.h; sourceTree = "<group>"; };
+		82F2F42121BE109A008BA29B /* SRChartDataFloatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRChartDataFloatView.h; sourceTree = "<group>"; };
+		82F2F42221BE109A008BA29B /* SRChartBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRChartBarView.h; sourceTree = "<group>"; };
+		82F2F42321BE109A008BA29B /* SRChartCurveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRChartCurveView.h; sourceTree = "<group>"; };
+		82F2F42421BE109A008BA29B /* NSNumber+SRChartTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+SRChartTool.m"; sourceTree = "<group>"; };
+		82F2F42521BE109A008BA29B /* SRChartDefaultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRChartDefaultView.m; sourceTree = "<group>"; };
+		82F2F42621BE109A008BA29B /* NSString+SRChartTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SRChartTool.h"; sourceTree = "<group>"; };
+		82F2F42721BE109A008BA29B /* SRChartContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRChartContainerView.h; sourceTree = "<group>"; };
+		82F2F42821BE109A008BA29B /* SRChartBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRChartBarView.m; sourceTree = "<group>"; };
+		82F2F42921BE109A008BA29B /* SRChartDataFloatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRChartDataFloatView.m; sourceTree = "<group>"; };
+		82F2F42A21BE109A008BA29B /* SRChartLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRChartLineView.m; sourceTree = "<group>"; };
+		82F2F42B21BE109A008BA29B /* SRChartCurveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRChartCurveView.m; sourceTree = "<group>"; };
+		82F2F42C21BE109A008BA29B /* NSNumber+SRChartTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+SRChartTool.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +82,7 @@
 		829031C51FF3952000A75327 /* SRChartToolDemo */ = {
 			isa = PBXGroup;
 			children = (
-				829031F81FF3954900A75327 /* SRChartTool */,
+				82F2F41C21BE109A008BA29B /* SRChartTool */,
 				829031C61FF3952000A75327 /* AppDelegate.h */,
 				829031C71FF3952000A75327 /* AppDelegate.m */,
 				829031C91FF3952000A75327 /* ViewController.h */,
@@ -96,25 +96,25 @@
 			path = SRChartToolDemo;
 			sourceTree = "<group>";
 		};
-		829031F81FF3954900A75327 /* SRChartTool */ = {
+		82F2F41C21BE109A008BA29B /* SRChartTool */ = {
 			isa = PBXGroup;
 			children = (
-				828E91A91FFDFCD1005A9F32 /* SRChartDefaultView.h */,
-				829727E41FF631B00011F119 /* SRChartDefaultView.m */,
-				82E1860F1FFB51CE0035CA5A /* SRChartContainerView.h */,
-				82E186101FFB51CE0035CA5A /* SRChartContainerView.m */,
-				82E186121FFB804D0035CA5A /* SRChartCurveView.h */,
-				82E186131FFB804D0035CA5A /* SRChartCurveView.m */,
-				82A8720D2003142D00F4DD8E /* SRChartBarView.h */,
-				82A8720E2003142D00F4DD8E /* SRChartBarView.m */,
-				823CFB3321BA61E400EB32AA /* SRChartLineView.h */,
-				823CFB3421BA61E500EB32AA /* SRChartLineView.m */,
-				823CFB3621BA6F2200EB32AA /* SRChartDataFloatView.h */,
-				823CFB3721BA6F2200EB32AA /* SRChartDataFloatView.m */,
-				823CFB3921BA738900EB32AA /* NSString+SRChartTool.h */,
-				823CFB3A21BA738900EB32AA /* NSString+SRChartTool.m */,
-				824DEDC921BB5DAA0090A28F /* NSNumber+SRChartTool.h */,
-				824DEDCA21BB5DAA0090A28F /* NSNumber+SRChartTool.m */,
+				82F2F42C21BE109A008BA29B /* NSNumber+SRChartTool.h */,
+				82F2F42421BE109A008BA29B /* NSNumber+SRChartTool.m */,
+				82F2F42621BE109A008BA29B /* NSString+SRChartTool.h */,
+				82F2F41E21BE109A008BA29B /* NSString+SRChartTool.m */,
+				82F2F42221BE109A008BA29B /* SRChartBarView.h */,
+				82F2F42821BE109A008BA29B /* SRChartBarView.m */,
+				82F2F42721BE109A008BA29B /* SRChartContainerView.h */,
+				82F2F41D21BE109A008BA29B /* SRChartContainerView.m */,
+				82F2F42321BE109A008BA29B /* SRChartCurveView.h */,
+				82F2F42B21BE109A008BA29B /* SRChartCurveView.m */,
+				82F2F42121BE109A008BA29B /* SRChartDataFloatView.h */,
+				82F2F42921BE109A008BA29B /* SRChartDataFloatView.m */,
+				82F2F41F21BE109A008BA29B /* SRChartDefaultView.h */,
+				82F2F42521BE109A008BA29B /* SRChartDefaultView.m */,
+				82F2F42021BE109A008BA29B /* SRChartLineView.h */,
+				82F2F42A21BE109A008BA29B /* SRChartLineView.m */,
 			);
 			path = SRChartTool;
 			sourceTree = "<group>";
@@ -190,17 +190,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				823CFB3821BA6F2200EB32AA /* SRChartDataFloatView.m in Sources */,
-				82E186111FFB51CE0035CA5A /* SRChartContainerView.m in Sources */,
+				82F2F43221BE109A008BA29B /* SRChartDataFloatView.m in Sources */,
 				829031CB1FF3952000A75327 /* ViewController.m in Sources */,
-				82A8720F2003142D00F4DD8E /* SRChartBarView.m in Sources */,
-				824DEDCB21BB5DAA0090A28F /* NSNumber+SRChartTool.m in Sources */,
-				823CFB3521BA61E500EB32AA /* SRChartLineView.m in Sources */,
 				829031D61FF3952000A75327 /* main.m in Sources */,
-				82E186141FFB804D0035CA5A /* SRChartCurveView.m in Sources */,
-				829727E51FF631B00011F119 /* SRChartDefaultView.m in Sources */,
+				82F2F43121BE109A008BA29B /* SRChartBarView.m in Sources */,
+				82F2F43321BE109A008BA29B /* SRChartLineView.m in Sources */,
+				82F2F43421BE109A008BA29B /* SRChartCurveView.m in Sources */,
+				82F2F43021BE109A008BA29B /* SRChartDefaultView.m in Sources */,
+				82F2F42D21BE109A008BA29B /* SRChartContainerView.m in Sources */,
 				829031C81FF3952000A75327 /* AppDelegate.m in Sources */,
-				823CFB3B21BA738900EB32AA /* NSString+SRChartTool.m in Sources */,
+				82F2F42E21BE109A008BA29B /* NSString+SRChartTool.m in Sources */,
+				82F2F42F21BE109A008BA29B /* NSNumber+SRChartTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,7 +338,7 @@
 				DEVELOPMENT_TEAM = Y7UHDGK344;
 				INFOPLIST_FILE = "$(SRCROOT)/SRChartToolDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sr.SRChartToolDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sr.SRChart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -352,7 +352,7 @@
 				DEVELOPMENT_TEAM = Y7UHDGK344;
 				INFOPLIST_FILE = "$(SRCROOT)/SRChartToolDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sr.SRChartToolDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sr.SRChart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

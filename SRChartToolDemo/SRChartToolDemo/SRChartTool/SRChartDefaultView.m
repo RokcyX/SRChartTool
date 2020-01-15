@@ -34,24 +34,22 @@
     for (CAShapeLayer *chartLayer in self.chartLayerList) {
         chartLayer.frame=CGRectMake(0, 20, self.frame.size.width, self.frame.size.height-20);
     }
+    [self setNeedsDisplay];
 }
 
 -(void)drawRect:(CGRect)rect{
     [super drawRect:rect];
-    
     CGFloat lastMaxX=0;
     for (int i=0;i<_xTitleArr.count;i++){
         NSString *xTitle=_xTitleArr[i];
         CGSize titleSize = [xTitle sizeWithMaxSize:CGSizeMake(MAXFLOAT, MAXFLOAT) font:self.xTitleFont];
         CGFloat x=(i+1)*self.gap-0.5*titleSize.width;//值的x坐标，需要根据x的字符串长度做偏移
-        CGPoint titlePosition=CGPointMake(x, self.frame.size.height-titleSize.height);
+        CGPoint titlePosition=CGPointMake(x, rect.size.height-titleSize.height);
         CGRect strFrame=CGRectMake(titlePosition.x, titlePosition.y, titleSize.width, titleSize.height);
-        
         if (i!=0&&(lastMaxX+3)>strFrame.origin.x) {
             continue;
         }
         lastMaxX=CGRectGetMaxX(strFrame);
-        
         [xTitle drawInRect:strFrame withAttributes:@{NSForegroundColorAttributeName:self.xTitleColor,NSFontAttributeName:self.xTitleFont}];
     }
 }
@@ -114,7 +112,7 @@
 
 -(UIFont *)xTitleFont{
     if(!_xTitleFont){
-        _xTitleFont=[UIFont systemFontOfSize:11];
+        _xTitleFont=[UIFont systemFontOfSize:7];
     }
     return _xTitleFont;
 }
@@ -159,7 +157,7 @@
         UIBezierPath *path = [pathList objectAtIndex:i];
         chartLayer.path = path.CGPath;
         chartLayer.fillColor = self.fillColor.CGColor;
-        chartLayer.strokeColor = [[self.lineColors objectAtIndex:i] CGColor];
+        chartLayer.strokeColor = [[self.lineColors objectAtIndex: i % [self.lineColors count]] CGColor];
         chartLayer.lineWidth = self.lineWidth;
     }
 }

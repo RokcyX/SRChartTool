@@ -31,6 +31,9 @@
     containerView.chartView=chartView;
     
 }
+
+
+
 - (IBAction)generate:(UIButton *)sender {
     
     NSMutableArray *xValueArr=[NSMutableArray array];
@@ -38,14 +41,16 @@
     for(int i=1;i<100;i++){
         [xValueArr addObject:[NSString stringWithFormat:@"%d月%d日",i,i]];
     }
-    NSMutableArray *yValueArr1 = [NSMutableArray array];
-    NSMutableArray *yValueArr2 = [NSMutableArray array];
-    for (int i = 1; i < 100 ; i ++) {
-        [yValueArr1 addObject:[NSNumber numberWithInt:arc4random()%100]];
-        [yValueArr2 addObject:[NSNumber numberWithInt:arc4random()%100]];
+    NSMutableArray *datas = [NSMutableArray array];
+    for (int i = 0; i < 2; i++) {
+        NSMutableArray *yValueArr = [NSMutableArray array];
+        for (int i = 1; i < 100 ; i ++) {
+            [yValueArr addObject:[NSNumber numberWithInt:arc4random()%10]];
+        }
+        [datas addObject:[yValueArr copy]];
     }
     containerView.chartView.fillColor = [UIColor clearColor];
-    [containerView showChartWithXValueArr:xValueArr yValueArrList:@[yValueArr1,yValueArr2] lineColors:@[[UIColor colorWithRed:24/255.0 green:144/255.0 blue:255/255 alpha:1],[UIColor colorWithRed:47/255.0 green:194/255.0 blue:91/255.0 alpha:1]]];
+    [containerView showChartWithXValueArr:xValueArr yValueArrList:[datas copy] lineColors:@[[UIColor colorWithRed:24/255.0 green:144/255.0 blue:255/255 alpha:1],[UIColor colorWithRed:47/255.0 green:194/255.0 blue:91/255.0 alpha:1]]];
 }
     
 - (IBAction)typeChange:(UISegmentedControl *)sender {

@@ -156,7 +156,7 @@
         CAShapeLayer *chartLayer = [self.chartLayerList objectAtIndex:i];
         UIBezierPath *path = [pathList objectAtIndex:i];
         chartLayer.path = path.CGPath;
-        chartLayer.fillColor = self.fillColor.CGColor;
+        chartLayer.fillColor = [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.1] CGColor];
         chartLayer.strokeColor = [[self.lineColors objectAtIndex: i % [self.lineColors count]] CGColor];
         chartLayer.lineWidth = self.lineWidth;
     }

@@ -31,7 +31,7 @@
         self.pointContainerLayer = [CAShapeLayer layer];
         [self.layer addSublayer:self.pointContainerLayer];
         self.pointContainerLayer.transform=CATransform3DMakeRotation(M_PI, 1, 0, 0);
-        self.pointContainerLayer.fillColor = self.pointColor.CGColor;
+        self.pointContainerLayer.fillColor = [[UIColor blackColor] CGColor];
         self.pointPath = [UIBezierPath bezierPath];
     }
     return self;
